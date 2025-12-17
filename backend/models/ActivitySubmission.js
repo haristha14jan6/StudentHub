@@ -29,10 +29,11 @@ const activitySubmissionSchema = new mongoose.Schema({
     default: "pending"
   },
 
-  submittedAt: {
-    type: Date,
-    default: Date.now
+  reviewedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   }
+
 }, { timestamps: true });
 
 export default mongoose.model("ActivitySubmission", activitySubmissionSchema);

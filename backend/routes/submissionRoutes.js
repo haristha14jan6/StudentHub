@@ -1,15 +1,17 @@
 import express from "express";
-import { createSubmission } from "../controllers/submissionController.js";
+import {
+  getPendingSubmissions,
+  approveSubmission,
+  rejectSubmission
+} from "../controllers/submissionController.js";
+
 import { protect } from "../middlewares/authMiddleware.js";
-import { upload } from "../middlewares/uploadMiddleware.js";
 
 const router = express.Router();
 
-router.post(
-  "/upload",
-  protect,
-  upload.single("certificate"),
-  createSubmission
-);
+// Professor APIs
+router.get("/pending", protect, getPendingSubmissions);
+router.put("/approve/:id", protect, approveSubmission);
+router.put("/reject/:id", protect, rejectSubmission);
 
 export default router;
