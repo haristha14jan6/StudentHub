@@ -4,6 +4,9 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import submissionRoutes from "./routes/submissionRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
+import driveRoutes from "./routes/driveRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -15,7 +18,9 @@ app.use(express.json()); // to parse JSON
 app.use("/api/submissions", submissionRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/notifications", notificationRoutes);
-
+app.use("/api/events", eventRoutes);
+app.use("/api/drives", driveRoutes);
+app.use("/api/auth", authRoutes);
 
 // Test route
 app.get("/", (req, res) => {

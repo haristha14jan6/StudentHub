@@ -3,7 +3,9 @@ import { upload } from "../middlewares/uploadMiddleware.js";
 import {
   getPendingSubmissions,
   approveSubmission,
-  rejectSubmission
+  rejectSubmission,
+   getSubmissionStats,
+  getSubmissionsList
 } from "../controllers/submissionController.js";
 
 import { protect } from "../middlewares/authMiddleware.js";
@@ -18,6 +20,8 @@ router.post(
   getPendingSubmissions
   
 );
+router.get("/stats", protect, getSubmissionStats);
+router.get("/list", protect, getSubmissionsList);
 router.get("/pending", protect, getPendingSubmissions);
 router.put("/approve/:id", protect, approveSubmission);
 router.put("/reject/:id", protect, rejectSubmission);
