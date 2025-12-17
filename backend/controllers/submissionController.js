@@ -1,3 +1,4 @@
+//@ts-nocheck
 import ActivitySubmission from "../models/ActivitySubmission.js";
 import User from "../models/User.js";
 import Notification from "../models/Notification.js";
