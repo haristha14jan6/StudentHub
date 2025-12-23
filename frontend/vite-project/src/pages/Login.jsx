@@ -3,38 +3,37 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useAuth();   // ✅ FIX
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    setError("");
 
-  try {
-    const res = await api.post("/auth/login", {
-      email,
-      password,
-    });
+    try {
+      const res = await api.post("/auth/login", { email, password });
 
-    login(res.data.token, res.data.user.role);
+      // ✅ Store token + user
+      login(res.data);
 
-    if (res.data.user.role === "student") {
-      navigate("/student/dashboard");
-    } else if (res.data.user.role === "professor") {
-      navigate("/professor/dashboard");
-    } else if (res.data.user.role === "placement") {
-      navigate("/placement/dashboard");
+      // ✅ Role-based redirect
+      if (res.data.user.role === "student") {
+        navigate("/student/dashboard", { replace: true });
+      } else if (res.data.user.role === "professor") {
+        navigate("/professor/dashboard", { replace: true });
+      } else {
+        navigate("/placement/dashboard", { replace: true });
+      }
+
+    } catch (err) {
+      setError(err.response?.data?.error || "Invalid credentials");
     }
-
-  } catch (err) {
-    console.error(err);
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -44,9 +43,7 @@ export default function Login() {
       >
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
-        {error && (
-          <p className="text-red-500 text-center mb-4">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
         <input
           type="email"
