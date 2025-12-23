@@ -7,6 +7,7 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import driveRoutes from "./routes/driveRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import portfolioRoutes from "./routes/portfolioRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -21,6 +22,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/drives", driveRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/portfolio", portfolioRoutes);
 
 // Test route
 app.get("/", (req, res) => {
