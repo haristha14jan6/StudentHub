@@ -104,26 +104,7 @@ export default function Register() {
           <option value="placement">Placement Cell</option>
         </select>
 
-        {/* Student-only fields */}
-        {form.role === "student" && (
-          <>
-            <input
-              name="dept"
-              placeholder="Department"
-              className="w-full mb-4 p-3 border rounded-lg"
-              value={form.dept}
-              onChange={handleChange}
-            />
-
-            <input
-              name="rollNo"
-              placeholder="Roll Number"
-              className="w-full mb-4 p-3 border rounded-lg"
-              value={form.rollNo}
-              onChange={handleChange}
-            />
-          </>
-        )}
+        
 
         <button
           type="submit"
