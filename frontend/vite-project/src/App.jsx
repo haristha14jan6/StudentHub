@@ -13,7 +13,7 @@ import PlacementDashboard from "./pages/PlacementDashboard";
 // (Dashboards will be added later)
 export default function App() {
   return (
-    <BrowserRouter>
+   
       <Routes>
         {/* Public Pages */}
         <Route path="/" element={<Home />} />
@@ -29,6 +29,6 @@ export default function App() {
         <Route path="/placement/dashboard" element={<PlacementDashboard />} />
       </Routes>
      
-    </BrowserRouter>
+   
   );
 }

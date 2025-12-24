@@ -8,6 +8,8 @@ export default function Register() {
     email: "",
     password: "",
     role: "student",
+    dept: "",
+    rollNo: "",
   });
 
   const [error, setError] = useState("");
@@ -32,7 +34,17 @@ export default function Register() {
         navigate("/login");
       }, 1500);
     } catch (err) {
-      setError(err.response?.data?.error || "Registration failed");
+      const msg = err.response?.data?.message || "Registration failed";
+
+      if (msg === "User already exists") {
+        setError("Account already exists. Redirecting to login...");
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      } else {
+        setError(msg);
+      }
     }
   };
 
@@ -47,6 +59,7 @@ export default function Register() {
         {error && (
           <p className="text-red-500 text-center mb-4">{error}</p>
         )}
+
         {success && (
           <p className="text-green-600 text-center mb-4">{success}</p>
         )}
@@ -55,6 +68,7 @@ export default function Register() {
           name="name"
           placeholder="Full Name"
           className="w-full mb-4 p-3 border rounded-lg"
+          value={form.name}
           onChange={handleChange}
           required
         />
@@ -64,6 +78,7 @@ export default function Register() {
           type="email"
           placeholder="Email"
           className="w-full mb-4 p-3 border rounded-lg"
+          value={form.email}
           onChange={handleChange}
           required
         />
@@ -73,6 +88,7 @@ export default function Register() {
           type="password"
           placeholder="Password"
           className="w-full mb-4 p-3 border rounded-lg"
+          value={form.password}
           onChange={handleChange}
           required
         />
@@ -80,12 +96,34 @@ export default function Register() {
         <select
           name="role"
           className="w-full mb-4 p-3 border rounded-lg"
+          value={form.role}
           onChange={handleChange}
         >
           <option value="student">Student</option>
           <option value="professor">Professor</option>
           <option value="placement">Placement Cell</option>
         </select>
+
+        {/* Student-only fields */}
+        {form.role === "student" && (
+          <>
+            <input
+              name="dept"
+              placeholder="Department"
+              className="w-full mb-4 p-3 border rounded-lg"
+              value={form.dept}
+              onChange={handleChange}
+            />
+
+            <input
+              name="rollNo"
+              placeholder="Roll Number"
+              className="w-full mb-4 p-3 border rounded-lg"
+              value={form.rollNo}
+              onChange={handleChange}
+            />
+          </>
+        )}
 
         <button
           type="submit"
