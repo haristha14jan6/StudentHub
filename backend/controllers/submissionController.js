@@ -4,6 +4,34 @@ import User from "../models/User.js";
 import Notification from "../models/Notification.js";
 import { ACTIVITY_CREDITS } from "../utils/constants.js";
 
+// 🟢 Student uploads activity certificate
+export const uploadSubmission = async (req, res) => {
+  try {
+    const { title, activityType } = req.body;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "Certificate file is required" });
+    }
+
+    const submission = await ActivitySubmission.create({
+      student: req.user.id,
+      title,
+      activityType,
+      certificateUrl: req.file.path,
+      status: "pending",
+    });
+
+    res.status(201).json({
+      message: "Submission uploaded successfully",
+      submission,
+    });
+  } catch (error) {
+    console.error("UPLOAD ERROR:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 
 // 🔹 Get all pending submissions (Professor)
 export const getPendingSubmissions = async (req, res) => {

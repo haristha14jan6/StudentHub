@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import StudentDashboard from "./pages/StudentDashboard";
+import StudentDashboard from "./pages/student/StudentDashboard";
+
 import ProfessorDashboard from "./pages/ProfessorDashboard";
 import PlacementDashboard from "./pages/PlacementDashboard";
 
@@ -24,7 +25,7 @@ export default function App() {
        
 
         {/* Dashboards */}
-        <Route path="/student/dashboard" element={<StudentDashboard />} />
+       <Route path="/student/dashboard" element={<StudentDashboard />} />
         <Route path="/professor/dashboard" element={<ProfessorDashboard />} />
         <Route path="/placement/dashboard" element={<PlacementDashboard />} />
       </Routes>
