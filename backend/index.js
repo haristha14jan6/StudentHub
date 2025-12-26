@@ -8,7 +8,7 @@ import eventRoutes from "./routes/eventRoutes.js";
 import driveRoutes from "./routes/driveRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import portfolioRoutes from "./routes/portfolioRoutes.js";
-
+import profileRoutes from "./routes/profileRoutes.js";
 dotenv.config();
 connectDB();
 
@@ -23,6 +23,7 @@ app.use("/api/events", eventRoutes);
 app.use("/api/drives", driveRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/portfolio", portfolioRoutes);
+app.use("/api/profile", profileRoutes);
 
 // Test route
 app.get("/", (req, res) => {

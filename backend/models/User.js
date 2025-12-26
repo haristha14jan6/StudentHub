@@ -35,7 +35,33 @@ const userSchema = new mongoose.Schema(
     credits: {
       type: Number,
       default: 0
-    }
+    },
+   about: {
+  type: String,
+  default: ""
+},
+
+skills: {
+  type: [String],
+  default: []
+},
+
+links: {
+  github: { type: String, default: "" },
+  linkedin: { type: String, default: "" },
+  email: { type: String, default: "" }
+},
+college: {
+  type: String,
+  default: "R.M.K College of Engineering"
+},
+year: {
+  type: Number,
+  min: 1,
+  max: 4,
+  default: 3
+},
+
   },
   { timestamps: true }
 );

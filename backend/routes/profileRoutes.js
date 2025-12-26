@@ -1,22 +1,21 @@
 import express from "express";
-import { generatePortfolio,getPortfolioView } from "../controllers/portfolioController.js";
+import { updateProfile,getMyProfile } from "../controllers/profileController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 import { allowRoles } from "../middlewares/roleMiddleware.js";
 
 const router = express.Router();
 
-router.get(
-  "/generate",
+router.put(
+  "/update",
   protect,
   allowRoles("student"),
-  generatePortfolio
+  updateProfile
 );
 router.get(
-  "/view",
+  "/me",
   protect,
   allowRoles("student"),
-  getPortfolioView
+  getMyProfile
 );
-
 
 export default router;
