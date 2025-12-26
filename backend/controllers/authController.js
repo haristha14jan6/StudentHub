@@ -16,28 +16,39 @@ export const register = async (req, res) => {
   try {
     const { name, email, password, role, dept, rollNo } = req.body;
 
-    const exists = await User.findOne({ email });
-    if (exists)
-      return res.status(400).json({ message: "User already exists" });
+    // Check if email already exists
+    const emailExists = await User.findOne({ email });
+    if (emailExists) return res.status(400).json({ message: "Email already registered" });
+
+    // Check if Roll Number already exists (Only for students)
+    if (role === 'student' && rollNo) {
+      const rollExists = await User.findOne({ rollNo });
+      if (rollExists) return res.status(400).json({ message: "Roll Number already exists" });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.create({
+    // Create user object - rollNo will be undefined for non-students
+    const userData = {
       name,
       email,
       password: hashedPassword,
       role,
       dept,
-      rollNo
-    });
+      ...(role === 'student' && { rollNo }) 
+    };
 
+    await User.create(userData);
     res.status(201).json({ message: "User registered successfully" });
 
   } catch (error) {
+    // This will catch MongoDB unique constraint errors
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "Duplicate entry found (Email or Roll Number)" });
+    }
     res.status(500).json({ error: error.message });
   }
 };
-
 // 🔑 Login
 export const login = async (req, res) => {
   try {

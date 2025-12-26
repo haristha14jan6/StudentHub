@@ -24,8 +24,10 @@ const userSchema = new mongoose.Schema(
       required: true
     },
 
-    dept: {
-      type: String
+    dept: { 
+    type: String, 
+    required: true, 
+    enum: ["CSE", "ECE", "MECH", "IT", "EEE", "CIVIL"]
     },
 
     rollNo: {
