@@ -30,3 +30,16 @@ export const getJobDrives = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+export const getJobDriveById = async (req, res) => {
+  try {
+    const drive = await JobDrive.findById(req.params.id);
+
+    if (!drive) {
+      return res.status(404).json({ message: "Drive not found" });
+    }
+
+    res.json(drive);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

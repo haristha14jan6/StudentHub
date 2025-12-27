@@ -13,10 +13,10 @@ const jobDriveSchema = new mongoose.Schema(
     },
 
     department: {
-      type: String,
-      required: true
-    },
-
+  type: String,
+  enum: ["CSE", "IT", "ECE", "EEE", "MECH", "CIVIL"],
+  required: true
+},
     year: {
       type: Number,
       required: true
@@ -26,17 +26,19 @@ const jobDriveSchema = new mongoose.Schema(
       type: [String]
     },
 
-    cgpaCriteria: {
-      type: String,
-      enum: ["nil", ">7.5", ">8.5"],
-      default: "nil"
-    },
+   cgpaCriteria: {
+  type: String,
+  enum: ["NONE", "GT_7_5", "GT_8_5"],
+  default: "NONE"
+},
 
-    arrearCriteria: {
-      type: String,
-      enum: ["no history", "no standing arrear", "with arrear", "all"],
-      default: "all"
-    },
+
+   arrearCriteria: {
+  type: String,
+  enum: ["ALL", "NO_HISTORY", "NO_STANDING", "WITH_ARREAR"],
+  default: "ALL"
+},
+
 
     registrationDeadline: {
       type: Date,
@@ -47,7 +49,21 @@ const jobDriveSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true
+    },
+   applicants: [
+  {
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    appliedAt: {
+      type: Date,
+      default: Date.now
     }
+  }
+],
+
+
   },
   { timestamps: true }
 );
