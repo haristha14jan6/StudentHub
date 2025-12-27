@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createJobDrive } from "../../api/placement";
+import { X } from "lucide-react";
 
 export default function CreateDriveModal({ onClose, onCreated }) {
   const [form, setForm] = useState({
@@ -20,78 +21,60 @@ export default function CreateDriveModal({ onClose, onCreated }) {
   };
 
   const handleSubmit = async () => {
-  try {
-    setLoading(true);
-
-    await createJobDrive({
-      ...form,
-      year: Number(form.year),
-      skillsRequired: form.skillsRequired
-        .split(",")
-        .map(s => s.trim())
-        .filter(Boolean)
-    });
-
-    console.log("onClose prop =", onClose);
-    console.log("onCreated prop =", onCreated);
-
-    if (typeof onClose === "function") {
-      onClose();
+    try {
+      setLoading(true);
+      await createJobDrive({
+        ...form,
+        year: Number(form.year),
+        skillsRequired: form.skillsRequired
+          .split(",")
+          .map(s => s.trim())
+          .filter(Boolean)
+      });
+      if (typeof onClose === "function") onClose();
+      if (typeof onCreated === "function") onCreated();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create drive");
+    } finally {
+      setLoading(false);
     }
-
-    if (typeof onCreated === "function") {
-      onCreated();
-    }
-
-  } catch (err) {
-    console.error(err);
-    alert("Failed to create drive");
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
-      <div className="bg-white w-full max-w-xl rounded-xl p-6 shadow-lg">
-        <h2 className="text-xl font-bold mb-4">
-          Create New Drive
-        </h2>
+    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
+        {/* Compact Header */}
+        <div className="px-5 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+          <h2 className="text-lg font-bold text-slate-800 tracking-tight">
+            Create New Drive
+          </h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
+            <X size={20} />
+          </button>
+        </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            name="companyName"
-            label="Company Name"
-            onChange={handleChange}
-          />
-
-          <Input
-            name="jobRole"
-            label="Job Role"
-            onChange={handleChange}
-          />
-
+        {/* Compact Form Body */}
+        <div className="p-5 grid grid-cols-2 gap-x-4 gap-y-3">
+          <Input name="companyName" label="Company Name" onChange={handleChange} placeholder="e.g. Google" />
+          <Input name="jobRole" label="Job Role" onChange={handleChange} placeholder="e.g. SDE" />
+          
           <Select
             name="department"
             label="Department"
-            options={["CSE","IT","ECE","EEE","MECH","CIVIL"]}
+            options={["CSE", "IT", "ECE", "EEE", "MECH", "CIVIL"]}
             onChange={handleChange}
           />
-
           <Select
             name="year"
             label="Year"
-            options={[1,2,3,4]}
+            options={[1, 2, 3, 4]}
             onChange={handleChange}
           />
 
-          <Input
-            name="skillsRequired"
-            label="Skills Required"
-            placeholder="Java, React, SQL"
-            onChange={handleChange}
-          />
+          <div className="col-span-2">
+            <Input name="skillsRequired" label="Skills Required" placeholder="Java, React, SQL" onChange={handleChange} />
+          </div>
 
           <Select
             name="cgpaCriteria"
@@ -116,29 +99,26 @@ export default function CreateDriveModal({ onClose, onCreated }) {
             onChange={handleChange}
           />
 
-          <Input
-            type="date"
-            name="registrationDeadline"
-            label="Registration Deadline"
-            onChange={handleChange}
-          />
+          <div className="col-span-2">
+            <Input type="date" name="registrationDeadline" label="Registration Deadline" onChange={handleChange} />
+          </div>
         </div>
 
-        <div className="flex justify-end gap-3 mt-6">
+        {/* Action Footer */}
+        <div className="px-5 py-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-3">
           <button
-            type="button"          // ✅ FIX
+            type="button"
             onClick={onClose}
-            className="px-4 py-2 border rounded-lg"
+            className="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-200 rounded-xl transition-colors"
             disabled={loading}
           >
             Cancel
           </button>
-
           <button
-            type="button"          // ✅ FIX
+            type="button"
             onClick={handleSubmit}
             disabled={loading}
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 text-sm font-semibold rounded-xl shadow-lg shadow-blue-200 transition-all disabled:opacity-50"
           >
             {loading ? "Creating..." : "Create Drive"}
           </button>
@@ -148,15 +128,15 @@ export default function CreateDriveModal({ onClose, onCreated }) {
   );
 }
 
-/* ---------- Reusable Inputs ---------- */
+/* ---------- Optimized Reusable Inputs ---------- */
 
 function Input({ label, ...props }) {
   return (
-    <div className="col-span-2">
-      <label className="text-sm font-medium">{label}</label>
+    <div className="w-full">
+      <label className="text-[11px] uppercase tracking-wider font-bold text-slate-500 ml-1">{label}</label>
       <input
         {...props}
-        className="w-full border p-2 rounded-lg mt-1"
+        className="w-full border border-slate-200 p-2 rounded-xl mt-1 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all placeholder:text-slate-300"
       />
     </div>
   );
@@ -164,26 +144,18 @@ function Input({ label, ...props }) {
 
 function Select({ label, name, options, onChange }) {
   return (
-    <div className="col-span-1">
-      <label className="text-sm font-medium">{label}</label>
+    <div className="w-full">
+      <label className="text-[11px] uppercase tracking-wider font-bold text-slate-500 ml-1">{label}</label>
       <select
         name={name}
         onChange={onChange}
-        className="w-full border p-2 rounded-lg mt-1"
+        className="w-full border border-slate-200 p-2 rounded-xl mt-1 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all bg-white"
       >
         <option value="">Select</option>
         {options.map(o =>
           typeof o === "object"
-            ? (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            )
-            : (
-              <option key={o} value={o}>
-                {o}
-              </option>
-            )
+            ? <option key={o.value} value={o.value}>{o.label}</option>
+            : <option key={o} value={o}>{o}</option>
         )}
       </select>
     </div>

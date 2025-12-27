@@ -62,7 +62,12 @@ export default function PlacementDashboard() {
 
           <div className="space-y-4">
             {drives.map(d => (
-              <DriveCard key={d._id} drive={d} />
+             <DriveCard
+  key={d._id}
+  drive={d}
+  onDeleted={fetchDrives}
+/>
+
             ))}
           </div>
         </section>
