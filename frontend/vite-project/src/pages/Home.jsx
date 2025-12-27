@@ -7,10 +7,9 @@ import {
   Upload, CheckCircle, Download, Phone, MapPin, Mail
 } from "lucide-react";
 
-/* ---------------- HERO (Updated to be Transparent) ---------------- */
+/* ---------------- HERO ---------------- */
 const Hero = () => (
   <section className="relative min-h-screen flex items-center justify-center text-center px-6 pt-20 overflow-hidden">
-    {/* Background Decoration specifically for Hero area */}
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-200/20 via-transparent to-transparent -z-10" />
     
     <div className="max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000 relative z-10">
@@ -31,7 +30,8 @@ const Hero = () => (
         <Link to="/register" className="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-slate-800 hover:scale-105 transition-all shadow-xl shadow-slate-200">
           Start Free <ArrowRight size={20} />
         </Link>
-        <a href="#how-it-works" className="w-full sm:w-auto px-8 py-4 bg-white/60 backdrop-blur-md border border-white/50 rounded-2xl font-bold text-slate-900 hover:bg-white/80 transition-all">
+        {/* Updated anchor link for smooth scroll */}
+        <a href="#how-it-works" className="w-full sm:w-auto px-8 py-4 bg-white/60 backdrop-blur-md border border-white/50 rounded-2xl font-bold text-slate-900 hover:bg-white/80 transition-all cursor-pointer">
           See How It Works
         </a>
       </div>
@@ -54,9 +54,9 @@ const Stat = ({ icon: Icon, value, label, color }) => (
   </div>
 );
 
-/* ---------------- FEATURES (Transparent Over Global Gradient) ---------------- */
+/* ---------------- FEATURES ---------------- */
 const Features = () => (
-  <section id="features" className="relative py-24 overflow-hidden">
+  <section id="features" className="relative py-24 overflow-hidden scroll-mt-20">
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Powerful Features</h2>
@@ -88,9 +88,9 @@ const Features = () => (
   </section>
 );
 
-/* ---------------- HOW IT WORKS (Updated to Transparent) ---------------- */
+/* ---------------- HOW IT WORKS ---------------- */
 const HowItWorks = () => (
-  <section id="how-it-works" className="py-32 relative overflow-hidden">
+  <section id="how-it-works" className="py-32 relative overflow-hidden scroll-mt-20">
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <h2 className="text-center text-4xl font-extrabold text-slate-900 mb-20 tracking-tight">Simple Four-Step Process</h2>
       <div className="grid md:grid-cols-4 gap-12 relative">
@@ -129,9 +129,9 @@ const CTA = () => (
   </section>
 );
 
-/* ---------------- FOOTER (Glassmorphism Dark) ---------------- */
+/* ---------------- FOOTER ---------------- */
 const Footer = () => (
-  <footer id="contact" className="bg-slate-950/90 backdrop-blur-xl text-white py-24 px-6 border-t border-white/10 mt-20">
+  <footer id="contact" className="bg-slate-950/90 backdrop-blur-xl text-white py-24 px-6 border-t border-white/10 mt-20 scroll-mt-20">
     <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16">
       <div className="space-y-6">
         <div className="flex items-center gap-3">
@@ -181,8 +181,10 @@ const Footer = () => (
 
 export default function Home() {
   return (
-    /* Apply Global Gradient Here */
     <div className="min-h-screen bg-gradient-to-br from-[#E0F2FE] via-[#F5F3FF] to-[#FAE8FF] selection:bg-blue-600 selection:text-blue-900">
+      {/* IMPORTANT: Ensure your Navbar component uses <a href="#features"> 
+          instead of <Link to="/#features"> for local smooth scrolling 
+      */}
       <Navbar />
       <Hero />
       <Features />

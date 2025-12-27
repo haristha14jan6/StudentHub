@@ -37,9 +37,13 @@ export default function Sidebar() {
           <FileText /> Portfolio
         </NavLink>
 
+
         <NavLink to="/student/profile" className="flex gap-3 items-center hover:text-blue-400">
           <Settings /> Profile
         </NavLink>
+
+        
+
 
        <button
       onClick={handleLogout}
