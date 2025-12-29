@@ -8,6 +8,8 @@ export default function Leaderboard() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('All');
+  // 🟢 NEW: Added search query state
+  const [searchQuery, setSearchQuery] = useState('');
   const departments = ['All', 'CSE', 'ECE', 'MECH', 'IT', 'EEE', 'CIVIL'];
 
   const fetchData = async () => {
@@ -27,9 +29,15 @@ export default function Leaderboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const filteredList = filter === 'All' 
-    ? students 
-    : students.filter(s => s.dept === filter);
+  // 🟢 UPDATED: Filter logic to handle both Department and Search Query
+  const filteredList = students.filter(s => {
+    const matchesDept = filter === 'All' || s.dept === filter;
+    const matchesSearch = 
+      s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      s.rollNo.toString().includes(searchQuery);
+    
+    return matchesDept && matchesSearch;
+  });
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFC]">
@@ -71,6 +79,9 @@ export default function Leaderboard() {
               <input 
                 type="text" 
                 placeholder="Search by name or roll number..." 
+                // 🟢 NEW: Linked input to search state
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 font-medium"
               />
             </div>
@@ -105,6 +116,7 @@ export default function Leaderboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
+                {/* 🟢 Rendered the filteredList which now includes search results */}
                 {filteredList.map((s) => (
                   <tr key={s.rollNo} className="hover:bg-slate-50/80 transition-colors group">
                     <td className="px-8 py-5 font-bold text-slate-700">{s.rank}</td>
@@ -127,6 +139,12 @@ export default function Leaderboard() {
                 ))}
               </tbody>
             </table>
+            {/* 🟢 Optional: Message for empty search results */}
+            {filteredList.length === 0 && (
+              <div className="p-10 text-center text-slate-400 font-medium">
+                No students found matching your search.
+              </div>
+            )}
           </div>
         </main>
       </div>
