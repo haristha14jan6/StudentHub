@@ -46,42 +46,45 @@ export default function ManageEvents() {
             + Create New Event
           </button>
 
-          <button className="px-5 py-2 rounded-xl border border-gray-300 text-gray-700">
-            Existing Events
-          </button>
+         
         </div>
       </div>
 
       {/* ===== EVENTS GRID ===== */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Upcoming Events */}
-        <section className="bg-white rounded-2xl shadow p-6">
-          <h3 className="text-lg font-semibold mb-4">Upcoming Events</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-          {events.upcoming.length === 0 ? (
-            <p className="text-gray-400 text-sm">No upcoming events</p>
-          ) : (
-            events.upcoming.map((e) => (
-              <EventCard key={e._id} event={e} />
-            ))
-          )}
-        </section>
+  {/* UPCOMING */}
+  <section className="bg-white rounded-2xl p-6 shadow">
+    <h3 className="text-lg font-semibold mb-6">Upcoming Events</h3>
 
-        {/* Completed Events */}
-        <section className="bg-white rounded-2xl shadow p-6">
-          <h3 className="text-lg font-semibold mb-4">
-            Completed Events (Last 1 Month)
-          </h3>
+    {events.upcoming.map(event => (
+      <EventCard
+        key={event._id}
+        event={event}
+        type="upcoming"
+        onDeleted={fetchEvents}
+      />
+    ))}
+  </section>
 
-          {events.completed.length === 0 ? (
-            <p className="text-gray-400 text-sm">No completed events</p>
-          ) : (
-            events.completed.map((e) => (
-              <EventCard key={e._id} event={e} />
-            ))
-          )}
-        </section>
-      </div>
+  {/* COMPLETED */}
+  <section className="bg-white rounded-2xl p-6 shadow">
+    <h3 className="text-lg font-semibold mb-6">
+      Completed Events (Last 1 Month)
+    </h3>
+
+    {events.completed.map(event => (
+      <EventCard
+        key={event._id}
+        event={event}
+        type="completed"
+      />
+    ))}
+  </section>
+
+</div>
+
+
     </div>
   );
 }

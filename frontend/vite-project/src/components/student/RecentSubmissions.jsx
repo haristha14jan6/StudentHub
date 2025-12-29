@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { CheckCircle, XCircle, Clock } from "lucide-react";
 
 export default function RecentSubmissions({ submissions = [] }) {

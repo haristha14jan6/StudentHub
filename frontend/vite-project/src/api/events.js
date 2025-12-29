@@ -8,3 +8,7 @@ export const createEvent = (formData) =>
 
 export const getEvents = () =>
   api.get("/events");
+
+export const deleteEvent = (id) => {
+  return api.delete(`/events/${id}`);
+};

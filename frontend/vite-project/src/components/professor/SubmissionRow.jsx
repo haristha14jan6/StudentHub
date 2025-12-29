@@ -36,21 +36,25 @@ export default function SubmissionRow({ submission, onApprove, onReject }) {
           </span>
         </td>
 
-        <td className="flex gap-2">
-          <button
-            onClick={() => onApprove(submission._id)}
-            className="bg-green-500 text-white px-3 py-1 rounded-lg"
-          >
-            <CheckCircle size={16} />
-          </button>
+      <td className="py-3 text-center">
+  <div className="flex items-center justify-center gap-2">
+    <button
+      onClick={() => onApprove(submission._id)}
+      className="flex items-center justify-center bg-green-500 text-white p-2 rounded-lg"
+    >
+      <CheckCircle size={16} />
+    </button>
 
-          <button
-            onClick={() => onReject(submission._id)}
-            className="bg-red-500 text-white px-3 py-1 rounded-lg"
-          >
-            <XCircle size={16} />
-          </button>
-        </td>
+    <button
+      onClick={() => onReject(submission._id)}
+      className="flex items-center justify-center bg-red-500 text-white p-2 rounded-lg"
+    >
+      <XCircle size={16} />
+    </button>
+  </div>
+</td>
+
+        
       </tr>
 
       {/* Modal */}

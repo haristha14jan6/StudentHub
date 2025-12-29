@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { Routes, Route,Navigate } from "react-router-dom";
-import Chatbot from "./components/chatbot/Chatbot";
+
 
 // Public Pages
 import Home from "./pages/Home";
@@ -75,7 +75,7 @@ export default function App() {
       </Routes>
 
       {/* 🤖 Chatbot always visible */}
-      <Chatbot />
+      
     </>
   );
 }
