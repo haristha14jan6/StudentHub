@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Event from "../models/Event.js";
 import Notification from "../models/Notification.js";
 import User from "../models/User.js";
@@ -65,6 +66,22 @@ export const getEvents = async (req, res) => {
       completed
     });
 
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+export const deleteEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const event = await Event.findById(id);
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    await event.deleteOne();
+
+    res.json({ message: "Event deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

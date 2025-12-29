@@ -1,3 +1,4 @@
+//@ts-nocheck
 import api from "./axios";
 
 export const deleteJobDrive = async (id) => {

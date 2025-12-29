@@ -46,9 +46,7 @@ export default function ManageEvents() {
             + Create New Event
           </button>
 
-          <button className="px-5 py-2 rounded-xl border border-gray-300 text-gray-700">
-            Existing Events
-          </button>
+          
         </div>
       </div>
 
@@ -62,7 +60,10 @@ export default function ManageEvents() {
             <p className="text-gray-400 text-sm">No upcoming events</p>
           ) : (
             events.upcoming.map((e) => (
-              <EventCard key={e._id} event={e} />
+              <EventCard key={e._id}
+      event={e}
+      type="upcoming"
+      onDeleted={fetchEvents}/>
             ))
           )}
         </section>
