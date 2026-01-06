@@ -21,7 +21,10 @@ connectDB();
 const app = express();
 
 // 4. Global Middleware
-app.use(cors());
+app.use(cors({
+  origin: "*",   // later restrict to Vercel domain
+}));
+
 app.use(express.json()); 
 app.use("/uploads", express.static("uploads"));
 
